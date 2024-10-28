@@ -1,0 +1,18 @@
+img = imread('bottle.tif');
+
+invertedImg= 255- img;
+
+
+threshold = 245;
+
+%escludo il filtro perché cancella troppi dettagli dall'oggetto più piccolo
+%(graffetta)
+
+%filter= fspecial("average");
+%img= imfilter(img,filter); 
+thresholdedImg= img>threshold;
+
+figure; 
+subplot(2,2,1), imshow(img), title("immagine");
+subplot(2,2,1), imshow(img), title("immagine");
+
