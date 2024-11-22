@@ -1,6 +1,0 @@
-img1 = imread("tools_1.jpg");
-img2 = imread("tools_2.jpg");
-differenze=img1-img2;
-
-differenze= im2
-imshow(differenze);
