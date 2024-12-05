@@ -1,3 +1,5 @@
+%aggiungere padding
+
 % Carica l'immagine e convertila in scala di grigi
 img = imread("lena.gif");
 

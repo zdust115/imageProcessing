@@ -14,7 +14,7 @@ for i=3:2:12
     img_order = img_order+1;
     error = immse(img,filtered_image); %calcolo l'errore tra immagine originale e filtrata, per comprendere la perdita di dati
     error_string = "MSE: " + num2str(error);
-    subplot(2,3,img_order), imshow(filtered_image), title(label_img), text(0,n+20,error_string);
+    subplot(2,3,img_order), imshow(filtered_image), title(label_img), xlabel(error_string);
 end
 
 medfilt2(img_noise);
