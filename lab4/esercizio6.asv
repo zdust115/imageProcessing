@@ -1,0 +1,10 @@
+close all 
+clear
+clc
+
+f=imread('bone.tif');
+%FS= bwskel(f);
+FS= bwmorph(f,"skel",Inf);
+FS = bwmorph(FS,'spur',5);
+
+imshow(f~=FS);

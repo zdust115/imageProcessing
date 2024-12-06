@@ -1,0 +1,8 @@
+% leggere book-text.tif, estrarre i caratteri con tratti verticali
+% eliminare i caratteri lungo il bordo
+
+f = imread('book-text.tif');
+h = strel("rectangle",[50,1]);
+fe = imerode(f,h);
+fd = imdilate(f,fe);
+imshow(fd)

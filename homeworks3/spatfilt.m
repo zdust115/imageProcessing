@@ -1,28 +1,20 @@
 function f = spatfilt(g, type, m, n, parameter)
     % SPATFILTER
     % funzione che implementa filtri spaziali lineari e non
-    % lineari, ha come output l'immagine filtrata
-    % Paramatri
-    % g -> immagine degradata
-    % type -> tipo di filtro da generare
-    % m -> righe del filtro
-    % n -> colonne del filtro
-    % parameter -> parametro aggiuntivo per filtri che lo necessitano
-    % media aritmetica
-    % media geometrica
-    % media armonica
-    % media controarmonica
-    % -
-    % mediano
-    % minimo
-    % massimo
-    % midpoint
-    % alfabilanciato
+    % lineari, restituisce in output l'immagine filtrata
+    % Parametri
+    % g = immagine degradata
+    % type = tipo di filtro da generare
+    % m = righe del filtro
+    % n = colonne del filtro
+    % parameter = parametro aggiuntivo per filtri che lo necessitano
+    % (armonica, contrarmonica e alpha-trimmed)
+    
 
     channels = size(g,3);
+    f = g; %inizializzo l'immagine
     for chann=1:channels
         img = g(:,:,chann);
-        f=g;
         switch(type)
             case "arithmetic"
                 h = fspecial("average",[m,n]);
@@ -47,16 +39,14 @@ function f = spatfilt(g, type, m, n, parameter)
                 
             
             case 'harmonic'
-                [P, Q] = size(img); % Dimensioni dell'immagine input
+                [P, Q, C] = size(img); % Dimensioni dell'immagine input
                 padRows = floor(m / 2); % Numero di righe di padding
                 padCols = floor(n / 2); % Numero di colonne di padding
                 
                 % Aggiungere padding all'immagine
                 paddedImg = padarray(img, [padRows, padCols]);
                 
-                % Creare un'immagine di output vuota
-                f = zeros(P, Q);
-                
+               
                 % Scorrere l'immagine originale
                 for i = 1:P
                     for j = 1:Q
@@ -87,8 +77,7 @@ function f = spatfilt(g, type, m, n, parameter)
                 % Aggiungere padding all'immagine
                 paddedImg = double(padarray(img, [padRows, padCols]));
                 
-                % Creare un'immagine di output vuota
-                f = zeros(rows, cols);
+                
                 
                 % Scorrere l'immagine originale
                 for i = 1:rows
@@ -97,8 +86,6 @@ function f = spatfilt(g, type, m, n, parameter)
                         window = double(paddedImg(i:i + m - 1, j:j + n - 1));
                         
                         % Applico la formula del filtro contrarmonico
-                        
-                        
                         sumUpper = sum(double(window(:)).^(Q + 1));
                         sumLower = sum(double(window(:)).^Q);
                         
@@ -110,12 +97,12 @@ function f = spatfilt(g, type, m, n, parameter)
                     end
                 end
             case 'median'
-                f=medfilt2(img,[m,n]);
+                f(:,:,chann) = medfilt2(img,[m,n]);
             case 'minimum'
-                f = ordfilt2(img,1,ones(m,n));
+                f(:,:,chann) = ordfilt2(img,1,ones(m,n));
             case 'maximum'
                 maximum = m*n;
-                f = ordfilt2(img,maximum,ones(m,n));
+                f(:,:,chann) = ordfilt2(img,maximum,ones(m,n));
             case 'midpoint'
                 [P,Q]= size(img);
                 padRows = floor(n/2);

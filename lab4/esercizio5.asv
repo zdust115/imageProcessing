@@ -1,0 +1,13 @@
+close all
+clear
+clc
+
+f=imread('ten-objects.tif');
+imshow(f)
+
+labelled = bwlabel(f);
+numero_etichette = max(labelled);
+
+for i=1:numero_etichette
+    subplot()
+end
